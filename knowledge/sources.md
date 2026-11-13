@@ -26,3 +26,15 @@ Format: `- fact -- source: URL -- confidence: verified|documented|assumed -- dat
 ## S7-1500
 
 - OPC UA server on S7-1500 requires a CPU-class runtime license (small/medium/large mapping) -- source: https://docs.tia.siemens.cloud/ "License for OPC UA" -- confidence: verified -- 2026-11-13
+
+## QNX platform (knowledge/qnx/)
+
+- qnxsdp-env.sh location + qcc -V usage; targets gcc_ntox86_64 (default), gcc_ntoaarch64le -- source: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.qnxsdp.quickstart/topic/your_program.html + utilities q/qcc.html -- confidence: verified -- 2026-11-13
+- GCC 12.x toolchain (12.2/binutils 2.41) in SDP 8.0 -- source: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.qnxsdp.migration/topic/toolchain.html -- confidence: verified -- 2026-11-13
+- SDP install via QNX Software Center 2.0, Conservative policy; free QNX Everywhere access URL -- source: https://www.qnx.com/developers/docs/relnotes8.0/com.qnx.doc.release_notes/topic/sdp8_rn.html -- confidence: verified -- 2026-11-13
+- QSTI prebuilt QEMU image package (com.qnx.qnx800.quickstart.qemu), Ubuntu 22.04/24.04 host only -- source: https://www.qnx.com/developers/docs/qnxeverywhere/rel_notes.html -- confidence: verified -- 2026-11-13
+- mkqnximage --type=qemu --arch=x86_64|aarch64le; snippet prefixes ifs_files/system_files/data_files/ifs_env; headless output qemu.out -- source: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.utilities/topic/m/mkqnximage.html -- confidence: verified -- 2026-11-13
+- Pi 5 BSP (BCM2712, com.qnx.qnx800.bsp.hw.raspberrypi_bcm2712_rpi5 build 568), 4GB/8GB; rebuild IFS recommended; CTI on gitlab qnx/custom-target-image-builds -- source: BSP8.0 docs (rel_sdp80.bsp.broadcom.rpi5.bcm2712, bsp_build, bsp_hw, about) -- confidence: verified -- 2026-11-13
+- resmgr skeleton (dispatch_create_channel, iofunc_func_init, resmgr_attach, dispatch_block loop); secpol_resmgr_attach recommendation -- source: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.getting_started/topic/s1_resmgr_the_resource_manager_library.html + security guide write_resource_manager -- confidence: verified -- 2026-11-13
+- MsgDeliverEvent non-blocking, server must not modify event; SIGEV_PULSE_INIT(event, coid, priority, code, value); MsgRegisterEvent for secure events; _PULSE_CODE_DISCONNECT handling -- source: getting_started s1_msg_MsgDeliverEvent + lib_ref m/msgdeliverevent, s/sigevent -- confidence: verified -- 2026-11-13
+- Third-party corroboration of QEMU workflow (mkqnximage qemu x86_64, ssh sync, ctest via CMAKE_CROSSCOMPILING_EMULATOR) -- source: https://pypi.org/project/qnx-porter/ -- confidence: documented -- 2026-11-13
