@@ -24,11 +24,13 @@ void UnityAssertEqualNumber(const char* msg, UNITY_INT expected, UNITY_INT actua
 void UnityAssertEqualString(const char* msg, const char* expected, const char* actual, const char* file, int line);
 void UnityAssertNull(const char* msg, const void* ptr, const char* file, int line);
 void UnityAssertNotNull(const char* msg, const void* ptr, const char* file, int line);
+void UnityAssertNotEqualNumber(const char* msg, UNITY_INT expected, UNITY_INT actual, const char* file, int line);
 
 #define TEST_ASSERT_EQUAL_INT(expected, actual) UnityAssertEqualNumber(NULL, (UNITY_INT)(expected), (UNITY_INT)(actual), __FILE__, __LINE__)
 #define TEST_ASSERT_EQUAL_STRING(expected, actual) UnityAssertEqualString(NULL, expected, actual, __FILE__, __LINE__)
 #define TEST_ASSERT_NULL(ptr) UnityAssertNull(NULL, ptr, __FILE__, __LINE__)
 #define TEST_ASSERT_NOT_NULL(ptr) UnityAssertNotNull(NULL, ptr, __FILE__, __LINE__)
+#define TEST_ASSERT_NOT_EQUAL(expected, actual) UnityAssertNotEqualNumber(NULL, (UNITY_INT)(expected), (UNITY_INT)(actual), __FILE__, __LINE__)
 #define TEST_FAIL(msg) do { UnityAssertEqualNumber(msg, 1, 0, __FILE__, __LINE__); } while(0)
 
 #define RUN_TEST(test_func) do { UnityBegin(#test_func); test_func(); UnityEnd(); } while(0)

@@ -53,3 +53,11 @@ void UnityAssertNotNull(const char* msg, const void* ptr, const char* file, int 
                file, line, msg ? ": " : "", msg ? msg : "");
     }
 }
+
+void UnityAssertNotEqualNumber(const char* msg, UNITY_INT expected, UNITY_INT actual, const char* file, int line) {
+    if (expected == actual) {
+        UnityTestsFailed++;
+        printf("  ASSERT_NOT_EQUAL failed at %s:%d: both are %d%s%s\n",
+               file, line, (int)expected, msg ? ": " : "", msg ? msg : "");
+    }
+}
