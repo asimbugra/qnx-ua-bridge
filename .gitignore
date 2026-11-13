@@ -1,0 +1,30 @@
+# build directories
+build/
+build-*/
+out/
+ifs/
+
+# artifacts
+*.o
+*.a
+*.so
+*.gch
+
+# cmake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+swp
+
+# local config & secrets
+.env
+config/tags.local.yaml
+
+# qnx image build output
+qnx/buildfiles/output/
