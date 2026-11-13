@@ -1,0 +1,31 @@
+{
+  "server": {
+    "url": "opc.tcp://plc-sim.local:4840",
+    "security": "none",
+    "reconnect_min_ms": 500,
+    "reconnect_max_ms": 30000
+  },
+  "tags": [
+    {
+      "path": "line1/conveyor_speed",
+      "node_id": "ns=3;s=\"ConveyorDB\".Speed",
+      "type": "double",
+      "access": "read",
+      "sampling_interval_ms": 100,
+      "deadband": 0.0
+    },
+    {
+      "path": "line1/setpoint",
+      "node_id": "ns=3;s=\"ConveyorDB\".Setpoint",
+      "type": "double",
+      "access": "write"
+    },
+    {
+      "path": "line1/motor_temp",
+      "node_id": "ns=3;s=\"MotorDB\".Temperature",
+      "type": "double",
+      "access": "read",
+      "sampling_interval_ms": 1000
+    }
+  ]
+}
