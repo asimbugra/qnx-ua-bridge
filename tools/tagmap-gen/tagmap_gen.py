@@ -6,7 +6,7 @@ Usage: python3 tagmap_gen.py opc.tcp://host:4840 [output.json]
 import asyncio
 import json
 import sys
-from asyncua import Client
+from asyncua import Client, ua
 
 async def browse(node, path_parts, out):
     children = await node.get_children()

@@ -29,30 +29,33 @@ async def main():
     conveyor_db = await objects.add_object(ns, "ConveyorDB")
     speed = await conveyor_db.add_variable(ns, "Speed", 0.0)
     await speed.set_writable()
-    await speed.set_attribute(ua.AttributeIds.Description, ua.LocalizedText("Conveyor speed m/s"))
+    await speed.write_attribute(ua.AttributeIds.Description, ua.DataValue(ua.Variant(ua.LocalizedText("Conveyor speed m/s"), ua.VariantType.LocalizedText)))
     setpoint = await conveyor_db.add_variable(ns, "Setpoint", 1.5)
     await setpoint.set_writable()
-    await setpoint.set_attribute(ua.AttributeIds.Description, ua.LocalizedText("Speed setpoint m/s"))
+    await setpoint.write_attribute(ua.AttributeIds.Description, ua.DataValue(ua.Variant(ua.LocalizedText("Speed setpoint m/s"), ua.VariantType.LocalizedText)))
     load = await conveyor_db.add_variable(ns, "Load", 0.0)
     await load.set_writable()
-    await load.set_attribute(ua.AttributeIds.Description, ua.LocalizedText("Conveyor load factor 0..1"))
+    await load.write_attribute(ua.AttributeIds.Description, ua.DataValue(ua.Variant(ua.LocalizedText("Conveyor load factor 0..1"), ua.VariantType.LocalizedText)))
 
     # MotorDB
     motor_db = await objects.add_object(ns, "MotorDB")
     temp = await motor_db.add_variable(ns, "Temperature", 45.0)
     await temp.set_writable()
-    await temp.set_attribute(ua.AttributeIds.Description, ua.LocalizedText("Motor temperature C"))
+    await temp.write_attribute(ua.AttributeIds.Description, ua.DataValue(ua.Variant(ua.LocalizedText("Motor temperature C"), ua.VariantType.LocalizedText)))
     current = await motor_db.add_variable(ns, "Current", 0.0)
     await current.set_writable()
-    await current.set_attribute(ua.AttributeIds.Description, ua.LocalizedText("Motor current A"))
+    await current.write_attribute(ua.AttributeIds.Description, ua.DataValue(ua.Variant(ua.LocalizedText("Motor current A"), ua.VariantType.LocalizedText)))
 
     # Status word (bool-ish)
-    status = await objects.add_variable(ns, "StatusWord", 0, ua.VariantType.UInt16)
+    status = await objects.add_variable(ns, "StatusWord", ua.Variant(0, ua.VariantType.UInt16))
     await status.set_writable()
 
-    # Subscription-friendly: set sampling interval hints
+    # Subscription-friendly: set sampling interval hints via MinimumSamplingInterval attribute
     for var in [speed, setpoint, load, temp, current, status]:
-        await var.set_sampling_interval(100)  # ms
+        await var.write_attribute(
+            ua.AttributeIds.MinimumSamplingInterval,
+            ua.DataValue(ua.Variant(100.0, ua.VariantType.Double)),
+        )
 
     print("Starting server...")
     async with server:
@@ -80,7 +83,7 @@ async def main():
             # Status word: bit0=running, bit1=at_setpoint
             sw = 1 if speed_val > 0.1 else 0
             sw |= 2 if abs(speed_val - sp) < 0.05 else 0
-            await status.write_value(sw)
+            await status.write_value(ua.Variant(sw, ua.VariantType.UInt16))
 
 if __name__ == "__main__":
     try:
