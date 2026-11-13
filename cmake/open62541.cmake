@@ -8,7 +8,7 @@ include(FetchContent)
 FetchContent_Declare(
     open62541
     GIT_REPOSITORY https://github.com/open62541/open62541.git
-    GIT_TAG        main                # TODO: pin exact SHA after verification
+    GIT_TAG        667acbc69132d3ba5b6db17be8002cb121849d41  # PR #8702 QNX 8.0 POSIX fixes (merged 2026-11-10); no release tag contains them yet
     GIT_SHALLOW    TRUE
 )
 
